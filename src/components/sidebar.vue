@@ -1,5 +1,5 @@
 <template>
-  <ul class="sidenav app-sidenav open">
+  <ul class="sidenav app-sidenav">
     <router-link
               v-for="item in navItems"
               v-bind:key= "item.url"

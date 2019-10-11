@@ -1,8 +1,8 @@
 <template>
   <div class="main-layout">
-    <navbar v-on:click="isOpen != isOpen"></navbar>
-    <sidebar></sidebar>
-    <router-view />
+    <navbar v-on:clickedhamburger="deformate"></navbar>
+    <sidebar v-bind:class="{'open' : isOpen}"></sidebar>
+    <router-view v-bind:class="{'full' : !isOpen}"/>
     <fixedButton></fixedButton>
   </div>
 </template>
@@ -16,6 +16,12 @@
       data: function(){
           return {
               isOpen: true
+          }
+      },
+      methods:{
+          deformate(){
+              // console.log(this.isOpen);
+              this.isOpen = !this.isOpen;
           }
       },
       components: {
