@@ -1,35 +1,89 @@
 <template>
-  <form class="card auth-card">
+  <form class="card auth-card" v-on:submit.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title center">Вход в домашнюю бухгалтерию</span>
       <div class="input-field">
-        <input id="email" type="text" class="validate">
+        <input
+                  id="email"
+                  type="text"
+                  v-model.trim="email"
+                  v-bind:class="{invalid: ($v.email.$dirty && (!$v.email.required || !$v.email.email))}">
         <label for="email">Email</label>
-        <small class="helper-text invalid">Email</small>
+        <small
+                  class="helper-text invalid"
+                  v-if="(!$v.email.required)"
+        >Поле Email недолжно быть пустым</small>
+        <small
+                  class="helper-text invalid"
+                  v-else-if="(!$v.email.email)"
+        >Введите коректный Email</small>
       </div>
       <div class="input-field">
-        <input id="password" type="password" class="validate">
+        <input
+                  id="password"
+                  type="password"
+                  v-model.trim="password"
+                  v-bind:class="{invalid: ($v.password.$dirty && (!$v.password.required || !$v.password.minLength || !$v.password.maxLength))}">
         <label for="password">Пароль</label>
-        <small class="helper-text invalid">Password</small>
+        <small
+                  class="helper-text invalid"
+                  v-if="(!$v.password.required)"
+        >Введите пароль</small>
+        <small
+                  class="helper-text invalid"
+                  v-else-if="(!$v.password.minLength)"
+        >Пародь должен иметь 8 знаков и более</small>
+        <small
+                  class="helper-text invalid"
+                  v-else-if="(!$v.password.maxLength)"
+        >Пароль не может быть длинее 12 знаков</small>
       </div>
     </div>
     <div class="card-action">
       <div>
-        <button class="btn waves-effect waves-light auth-submit" type="submit">Войти
+        <button class="btn auth-submit top" type="submit">Войти
           <i class="material-icons right">send</i>
         </button>
+        <router-link to="/registration" class="btn auth-submit">Зарегистрироваться
+          <i class="material-icons right">send</i>
+        </router-link>
       </div>
-      <p class="center">Нет аккаунта?<a href="/">Зарегистрироваться</a></p>
     </div>
   </form>
 </template>
 
 <script>
+  import {email, required, minLength, maxLength} from 'vuelidate/lib/validators'
     export default {
-        name: "Login"
+        name: "Login",
+        data: function () {
+            return{
+                email: '',
+                password: ''
+            }
+        },
+        validations: {
+            email: {email, required},
+            password: {minLength: minLength(8), maxLength: maxLength(12), required}
+        },
+        methods:{
+            submitHandler(){
+                if (this.$v.$invalid){
+                    this.$v.$touch();
+                    return
+                }
+                this.$router.push('/');
+                const formDataLogin = {
+                    email: this.email,
+                    password: this.password
+                };
+                console.log(formDataLogin)
+            }
+        }
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="stylus">
+  button.btn.top
+    margin-bottom 10px
 </style>

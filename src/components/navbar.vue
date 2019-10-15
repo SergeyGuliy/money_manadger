@@ -6,7 +6,7 @@
           <a href="#" v-on:click.prevent="clickhamburger">
             <i class="material-icons black-text">dehaze</i>
           </a>
-          <span class="black-text">{{timeNow | date}}</span>
+          <span class="black-text">{{ timeNow | date('time') }}</span>
         </div>
 
         <ul class="right hide-on-small-and-down">

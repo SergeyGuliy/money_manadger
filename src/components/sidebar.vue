@@ -7,7 +7,7 @@
               active-class="active"
               v-bind:to="item.url"
               v-bind:exact="item.exact">
-      <a href="#" class="waves-effect  pointer">{{item.name}}</a>
+      <a href="#" class="pointer">{{item.name}}</a>
     </router-link>
   </ul>
 </template>
