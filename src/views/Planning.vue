@@ -2,7 +2,6 @@
   <main class="app-content">
     <div class="app-page">
 
-
       <div>
         <div class="page-title">
           <h3>Планирование</h3>
@@ -27,9 +26,9 @@
 </template>
 
 <script>
-    export default {
-        name: "Planning"
-    }
+export default {
+  name: 'Planning'
+}
 </script>
 
 <style scoped>

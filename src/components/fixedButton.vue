@@ -7,9 +7,9 @@
 </template>
 
 <script>
-    export default {
-        name: "fixedButton"
-    }
+export default {
+  name: 'fixedButton'
+}
 </script>
 
 <style scoped>

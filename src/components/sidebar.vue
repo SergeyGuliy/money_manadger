@@ -13,20 +13,20 @@
 </template>
 
 <script>
-    export default {
-        name: "sidebar",
-        data: function () {
-            return {
-                navItems: [
-                  {name: 'Счет', url: '/', exact: true},
-                  {name: 'История', url: '/history'},
-                  {name: 'Планирование', url: '/planning'},
-                  {name: 'Новая запись', url: '/record'},
-                  {name: 'Категории', url: '/categories'},
-                ]
-            }
-        }
+export default {
+  name: 'sidebar',
+  data: function () {
+    return {
+      navItems: [
+        { name: 'Счет', url: '/', exact: true },
+        { name: 'История', url: '/history' },
+        { name: 'Планирование', url: '/planning' },
+        { name: 'Новая запись', url: '/record' },
+        { name: 'Категории', url: '/categories' }
+      ]
     }
+  }
+}
 </script>
 
 <style scoped>

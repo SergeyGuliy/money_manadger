@@ -37,33 +37,33 @@
 </template>
 
 <script>
-    export default {
-        name: "navbar",
-        data: function (){
-            return {
-                timeNow: new Date(),
-            }
-        },
-        methods:{
-            clickhamburger(){
-                this.$emit('clickedhamburger');
-            },
-            logout(){
-                console.log('LOGOUT');
-                this.$router.push('/login?message=logout')
-            }
-        },
-
-        mounted() {
-            setInterval(() =>{
-                this.timeNow = new Date();
-            }, 1000);
-            M.Dropdown.init(this.$refs.dropdown,{
-                constrainWidth: false,
-                coverTrigger: false
-            })
-        }
+export default {
+  name: 'navbar',
+  data: function () {
+    return {
+      timeNow: new Date()
     }
+  },
+  methods: {
+    clickhamburger () {
+      this.$emit('clickedhamburger')
+    },
+    async logout () {
+      await this.$store.dispatch('logout')
+      this.$router.push('/login?message=logout')
+    }
+  },
+
+  mounted () {
+    setInterval(() => {
+      this.timeNow = new Date()
+    }, 1000)
+    M.Dropdown.init(this.$refs.dropdown, {
+      constrainWidth: false,
+      coverTrigger: false
+    })
+  }
+}
 </script>
 
 <style scoped lang="stylus">

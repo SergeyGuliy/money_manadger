@@ -49,9 +49,9 @@
 </template>
 
 <script>
-    export default {
-        name: "Histor"
-    }
+export default {
+  name: 'Histor'
+}
 </script>
 
 <style scoped>

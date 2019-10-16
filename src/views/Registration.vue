@@ -7,7 +7,7 @@
                   id="email"
                   type="text"
                   v-model="email"
-                  v-bind:class="{invalid: ($v.email.$dirty && (!$v.email.required || !$v.email.email))}">
+                  v-bind:class="{invalid: (!this.$v.email.required || !this.$v.email.email)}">
         <label for="email">Email</label>
         <small
                   class="helper-text invalid"
@@ -23,7 +23,7 @@
                   id="password"
                   type="password"
                   v-model="password"
-                  v-bind:class="{invalid: ($v.password.$dirty && (!$v.password.required || !$v.password.minLength || !$v.password.maxLength))}">
+                  v-bind:class="{invalid: (!this.$v.password.required || !this.$v.password.minLength || !this.$v.password.maxLength)}">
         <label for="password">Пароль</label>
         <small
                   class="helper-text invalid"
@@ -43,7 +43,7 @@
                   id="passwordRepeat"
                   type="password"
                   v-model="passwordRepeat"
-                  v-bind:class="{invalid: ($v.password.$dirty && (!$v.password.required || !$v.passwordRepeat.samePassword))}">
+                  v-bind:class="{invalid: (!this.$v.password.required || !this.$v.passwordRepeat.samePassword)}">
         <label for="passwordRepeat">Повторите пароль</label>
         <small
                   class="helper-text invalid"
@@ -59,7 +59,7 @@
                   id="name"
                   type="text"
                   v-model="name"
-        v-bind:class="{invalid: ($v.name.$dirty && (!$v.name.required || !$v.name.minLength || !$v.name.maxLength || !$v.name.alpha))}">
+        v-bind:class="{invalid: (!this.$v.name.required || !this.$v.name.minLength || !this.$v.name.maxLength || !this.$v.name.alpha)}">
         <label for="name">Имя</label>
         <small
                   class="helper-text invalid"
@@ -94,7 +94,7 @@
     </div>
     <div class="card-action">
       <div>
-        <button class="btn auth-submit top" type="submit">Зарегистрироваться
+        <button class="btn auth-submit top" type="submit" v-bind:class="{disabled: (!agreement || (!this.$v.email.required || !this.$v.email.email) || (!this.$v.password.required || !this.$v.password.minLength || !this.$v.password.maxLength) || (!this.$v.password.required || !this.$v.passwordRepeat.samePassword) || (!this.$v.name.required || !this.$v.name.minLength || !this.$v.name.maxLength || !this.$v.name.alpha))}">Зарегистрироваться
           <i class="material-icons right">send</i>
         </button>
         <router-link to="/login" class="btn auth-submit">Войти
@@ -106,43 +106,44 @@
 </template>
 
 <script>
-  import {email, required, minLength, maxLength, alpha, sameAs} from 'vuelidate/lib/validators'
-    export default {
-        name: "Registration",
-        data: function () {
-            return {
-                email: '',
-                password: '',
-                passwordRepeat: '',
-                name: '',
-                agreement: false,
-            }
-        },
-        validations: {
-            email: {email, required},
-            password: {minLength: minLength(8), maxLength: maxLength(12), required},
-            passwordRepeat: {samePassword: sameAs("password")},
-            name: {minLength: minLength(2), maxLength: maxLength(10), required, alpha},
-            agreement: {checked: v => v}
-        },
-        methods:{
-            submitHandler(){
-
-                if (this.$v.$invalid){
-                    this.$v.$touch();
-                    return
-                }
-                this.$router.push('/');
-                const formDataRegister = {
-                    email: this.email,
-                    password: this.password,
-                    name: this.name,
-                    agreement: this.agreement
-                };
-                console.log(formDataRegister)
-            }
-        }
+import { email, required, minLength, maxLength, alpha, sameAs } from 'vuelidate/lib/validators'
+export default {
+  name: 'Registration',
+  data: function () {
+    return {
+      email: '',
+      password: '',
+      passwordRepeat: '',
+      name: '',
+      agreement: false,
     }
+  },
+  validations: {
+    email: { email, required },
+    password: { minLength: minLength(8), maxLength: maxLength(12), required },
+    passwordRepeat: { samePassword: sameAs('password') },
+    name: { minLength: minLength(2), maxLength: maxLength(10), required, alpha },
+    agreement: { checked: v => v }
+  },
+  methods: {
+    async submitHandler () {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+      this.$router.push('/')
+      const formDataRegister = {
+        email: this.email,
+        password: this.password,
+        name: this.name
+      }
+      try {
+        await this.$store.dispatch('registration', formDataRegister)
+        this.$router.push('/')
+      } catch (e) {}
+    }
+  }
+}
 </script>
 
 <style scoped lang="stylus">

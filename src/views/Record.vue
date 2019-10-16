@@ -53,9 +53,9 @@
 </template>
 
 <script>
-    export default {
-        name: "Record"
-    }
+export default {
+  name: 'Record'
+}
 </script>
 
 <style scoped>

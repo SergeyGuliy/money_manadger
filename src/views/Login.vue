@@ -7,7 +7,7 @@
                   id="email"
                   type="text"
                   v-model.trim="email"
-                  v-bind:class="{invalid: ($v.email.$dirty && (!$v.email.required || !$v.email.email))}">
+                  v-bind:class="{invalid: (!this.$v.email.required || !this.$v.email.email)}">
         <label for="email">Email</label>
         <small
                   class="helper-text invalid"
@@ -23,7 +23,7 @@
                   id="password"
                   type="password"
                   v-model.trim="password"
-                  v-bind:class="{invalid: ($v.password.$dirty && (!$v.password.required || !$v.password.minLength || !$v.password.maxLength))}">
+                  v-bind:class="{invalid: (!this.$v.password.required || !this.$v.password.minLength || !this.$v.password.maxLength)}">
         <label for="password">Пароль</label>
         <small
                   class="helper-text invalid"
@@ -41,7 +41,7 @@
     </div>
     <div class="card-action">
       <div>
-        <button class="btn auth-submit top" type="submit">Войти
+        <button class="btn auth-submit top" type="submit" v-bind:class="{disabled: ((!this.$v.email.required || !this.$v.email.email) || (!this.$v.password.required || !this.$v.password.minLength || !this.$v.password.maxLength))}">Войти
           <i class="material-icons right">send</i>
         </button>
         <router-link to="/registration" class="btn auth-submit">Зарегистрироваться
@@ -53,34 +53,44 @@
 </template>
 
 <script>
-  import {email, required, minLength, maxLength} from 'vuelidate/lib/validators'
-    export default {
-        name: "Login",
-        data: function () {
-            return{
-                email: '',
-                password: ''
-            }
-        },
-        validations: {
-            email: {email, required},
-            password: {minLength: minLength(8), maxLength: maxLength(12), required}
-        },
-        methods:{
-            submitHandler(){
-                if (this.$v.$invalid){
-                    this.$v.$touch();
-                    return
-                }
-                this.$router.push('/');
-                const formDataLogin = {
-                    email: this.email,
-                    password: this.password
-                };
-                console.log(formDataLogin)
-            }
-        }
+import { email, required, minLength, maxLength } from 'vuelidate/lib/validators'
+import messages from '../plagins/messages'
+export default {
+  name: 'Login',
+  data: function () {
+    return {
+      email: '',
+      password: '',
     }
+  },
+  validations: {
+    email: { email, required },
+    password: { minLength: minLength(8), maxLength: maxLength(12), required }
+  },
+  methods: {
+    async submitHandler () {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return
+      }
+      const formDataLogin = {
+        email: this.email,
+        password: this.password
+      };
+      try {
+        await this.$store.dispatch('login', formDataLogin);
+        this.$router.push('/')
+      } catch (e) {
+        this.$error('Что то не так')
+      }
+    }
+  },
+  mounted () {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message])
+    }
+  }
+}
 </script>
 
 <style scoped lang="stylus">

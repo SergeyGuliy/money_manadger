@@ -8,26 +8,25 @@
 </template>
 
 <script>
-  import navbar from "../components/navbar";
-  import fixedButton from "../components/fixedButton";
-  import sidebar from "../components/sidebar";
-  export default {
-      name: "MainLayout",
-      data: function(){
-          return {
-              isOpen: true
-          }
-      },
-      methods:{
-          deformate(){
-              // console.log(this.isOpen);
-              this.isOpen = !this.isOpen;
-          }
-      },
-      components: {
-          navbar, fixedButton, sidebar
-      }
+import navbar from '../components/navbar'
+import fixedButton from '../components/fixedButton'
+import sidebar from '../components/sidebar'
+export default {
+  name: 'MainLayout',
+  data: function () {
+    return {
+      isOpen: true
+    }
+  },
+  methods: {
+    deformate () {
+      this.isOpen = !this.isOpen
+    }
+  },
+  components: {
+    navbar, fixedButton, sidebar
   }
+}
 </script>
 
 <style scoped>
