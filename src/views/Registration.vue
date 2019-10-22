@@ -115,7 +115,7 @@ export default {
       password: '',
       passwordRepeat: '',
       name: '',
-      agreement: false,
+      agreement: false
     }
   },
   validations: {
@@ -131,7 +131,6 @@ export default {
         this.$v.$touch()
         return
       }
-      this.$router.push('/')
       const formDataRegister = {
         email: this.email,
         password: this.password,
@@ -140,7 +139,8 @@ export default {
       try {
         await this.$store.dispatch('registration', formDataRegister)
         this.$router.push('/')
-      } catch (e) {}
+      } catch (e) {
+      }
     }
   }
 }

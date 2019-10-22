@@ -60,7 +60,7 @@ export default {
   data: function () {
     return {
       email: '',
-      password: '',
+      password: ''
     }
   },
   validations: {
@@ -70,18 +70,17 @@ export default {
   methods: {
     async submitHandler () {
       if (this.$v.$invalid) {
-        this.$v.$touch();
+        this.$v.$touch()
         return
       }
       const formDataLogin = {
         email: this.email,
         password: this.password
-      };
+      }
       try {
-        await this.$store.dispatch('login', formDataLogin);
+        await this.$store.dispatch('login', formDataLogin)
         this.$router.push('/')
       } catch (e) {
-        this.$error('Что то не так')
       }
     }
   },
