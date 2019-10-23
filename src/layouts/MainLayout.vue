@@ -1,9 +1,12 @@
 <template>
-  <div class="main-layout">
-    <navbar v-on:clickedhamburger="deformate"></navbar>
-    <sidebar v-bind:class="{'open' : isOpen}"></sidebar>
-    <router-view v-bind:class="{'full' : !isOpen}"/>
-    <fixedButton></fixedButton>
+  <div>
+      <Loader v-if="loading"/>
+      <div v-else class="main-layout">
+          <navbar v-on:clickedhamburger="deformate"></navbar>
+          <sidebar v-bind:class="{'open' : isOpen}"></sidebar>
+          <router-view v-bind:class="{'full' : !isOpen}"/>
+          <fixedButton></fixedButton>
+      </div>
   </div>
 </template>
 
@@ -15,8 +18,15 @@ export default {
   name: 'MainLayout',
   data: function () {
     return {
-      isOpen: true
+      isOpen: true,
+      loading: true
     }
+  },
+  async mounted () {
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$store.dispatch('fetchInfo')
+    }
+    this.loading = false
   },
   methods: {
     deformate () {
