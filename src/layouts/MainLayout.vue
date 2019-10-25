@@ -14,6 +14,7 @@
 import navbar from '../components/navbar'
 import fixedButton from '../components/fixedButton'
 import sidebar from '../components/sidebar'
+import messages from '../plagins/messages'
 export default {
   name: 'MainLayout',
   data: function () {
@@ -35,6 +36,16 @@ export default {
   },
   components: {
     navbar, fixedButton, sidebar
+  },
+  computed: {
+    error () {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error (fbError) {
+      this.$error(messages[fbError.code] || 'Что то пошло не так')
+    }
   }
 }
 </script>
