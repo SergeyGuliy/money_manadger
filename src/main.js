@@ -12,6 +12,7 @@ import Loader from './components/Loader'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
+import tooltipDirective from './directives/tooltip.directive'
 
 Vue.config.productionTip = false
 
@@ -19,6 +20,7 @@ Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
 Vue.use(Vuelidate)
 Vue.use(messageToast)
+Vue.directive('tooltip', tooltipDirective)
 Vue.component('Loader', Loader)
 
 firebase.initializeApp({
