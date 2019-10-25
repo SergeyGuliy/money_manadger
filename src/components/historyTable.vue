@@ -33,15 +33,15 @@
 </template>
 
 <script>
-    export default {
-        name: "historyTable",
-		props: {
-            records: {
-                required: true,
-				type: Array
-			}
-		}
+export default {
+  name: 'historyTable',
+  props: {
+    records: {
+      required: true,
+      type: Array
     }
+  }
+}
 </script>
 
 <style scoped lang="stylus">
