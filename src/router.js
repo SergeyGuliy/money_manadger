@@ -27,8 +27,8 @@ const router = new Router({
       component: () => import('./views/Registration.vue')
     },
     {
-      path: '/details',
-      name: 'details',
+      path: '/detail/:id',
+      name: 'detail',
       meta: { layout: 'main-layout', auth: true },
       component: () => import('./views/DetailRecord.vue')
     },

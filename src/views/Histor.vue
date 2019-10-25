@@ -1,59 +1,49 @@
 <template>
-  <main class="app-content">
-    <div class="app-page">
+	<main class="app-content">
+		<div class="app-page">
+			<div>
+				<div class="page-title">
+					<h3>История записей</h3>
+				</div>
 
-      <div>
-        <div class="page-title">
-          <h3>История записей</h3>
-        </div>
-
-        <div class="history-chart">
-          <canvas></canvas>
-        </div>
-
-        <section>
-          <table>
-            <thead>
-            <tr>
-              <th>#</th>
-              <th>Сумма</th>
-              <th>Дата</th>
-              <th>Категория</th>
-              <th>Тип</th>
-              <th>Открыть</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr>
-              <td>1</td>
-              <td>1212</td>
-              <td>12.12.32</td>
-              <td>name</td>
-              <td>
-                <span class="white-text badge red">Расход</span>
-              </td>
-              <td>
-                <button class="btn-small btn">
-                  <i class="material-icons">open_in_new</i>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
-
-    </div>
-  </main>
+				<div class="history-chart">
+					<canvas></canvas>
+				</div>
+				<Loader v-if="loading"></Loader>
+				<p class="center" v-else-if="!records.length">Список записей пуст <router-link to="/record">Добавьте первую</router-link></p>
+				<historyTable v-else v-bind:records="records"></historyTable>
+			</div>
+		</div>
+	</main>
 </template>
 
 <script>
+import historyTable from "../components/historyTable";
 export default {
-  name: 'Histor'
+  name: 'Histor',
+	components: {historyTable},
+	data(){
+      return{
+          loading: true,
+		  records: [],
+		  categories: []
+	  }
+	},
+	async mounted(){
+        // this.records = await this.$store.dispatch('fetchRecords')
+        const records= await this.$store.dispatch('fetchRecords')
+        this.categories = await this.$store.dispatch('fetchCategories')
+		this.records = records.map(record => {
+			return {
+			    ...record,
+				categoryName: this.categories.find(c => c.id === record.Id).title,
+				typeClass: record.type === 'income' ? 'green' : 'red',
+                typeText: record.type === 'income' ? 'Доход' : 'Расход'
+			}
+        })
+		this.loading = false
+	}
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
