@@ -13,6 +13,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import tooltipDirective from './directives/tooltip.directive'
+import Paginate from 'vuejs-paginate'
 
 Vue.config.productionTip = false
 
@@ -22,6 +23,7 @@ Vue.use(Vuelidate)
 Vue.use(messageToast)
 Vue.directive('tooltip', tooltipDirective)
 Vue.component('Loader', Loader)
+Vue.component('Paginate', Paginate)
 
 firebase.initializeApp({
   apiKey: 'AIzaSyDs5I_IPNBFQ3zj23nivHysz5nQttZW304',

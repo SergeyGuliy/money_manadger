@@ -14,7 +14,7 @@
 
 			<tbody>
 			<tr v-for="(record, idx) of records" v-bind:key="record.id">
-				<td>{{idx+1}}</td>
+				<td>{{(($route.query.page || 1) * 5)+idx-4}}</td>
 				<td>{{record.amount | currency('UAH')}}</td>
 				<td>{{record.dateCreated |date('datetime')}}</td>
 				<td>{{record.categoryName}}</td>
