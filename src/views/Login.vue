@@ -93,6 +93,12 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-  button.btn.top
-    margin-bottom 10px
+	button.btn.top
+		margin-bottom 10px
+
+	form.auth-card
+		width 80%
+		min-width 400px
+		max-width 600px
+
 </style>

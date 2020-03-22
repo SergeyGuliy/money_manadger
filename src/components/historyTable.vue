@@ -6,8 +6,7 @@
 				<th>#</th>
 				<th>Сумма</th>
 				<th>Дата</th>
-				<th>Категория</th>
-				<th>Тип</th>
+				<th>Кат</th>
 				<th>Открыть</th>
 			</tr>
 			</thead>
@@ -16,14 +15,11 @@
 			<tr v-for="(record, idx) of records" v-bind:key="record.id">
 				<td>{{(($route.query.page || 1) * 5)+idx-4}}</td>
 				<td>{{record.amount | currency('UAH')}}</td>
-				<td>{{record.dateCreated |date('datetime')}}</td>
+				<td>{{record.dateCreated |date('date')}}</td>
 				<td>{{record.categoryName}}</td>
 				<td>
-					<span class="white-text badge" v-bind:class="[record.typeClass]">{{record.typeText}}</span>
-				</td>
-				<td>
-					<button class="btn-small btn" v-on:click="$router.push('/detail/'+record.id)">
-						<i class="material-icons">open_in_new</i>
+					<button class="btn-small btn" v-on:click="$router.push('/detail/'+record.id)" v-bind:class="[record.typeClass]">
+						{{record.typeText}}<i class="material-icons">open_in_new</i>
 					</button>
 				</td>
 			</tr>

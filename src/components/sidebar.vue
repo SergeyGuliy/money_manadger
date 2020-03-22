@@ -29,6 +29,7 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="stylus">
+ul
+	height 100%
 </style>

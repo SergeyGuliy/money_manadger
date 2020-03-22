@@ -10,8 +10,8 @@
         </div>
           <Loader v-if="loading" />
         <div v-else class="row">
-          <homeBill v-bind:rates="currency.rates"></homeBill>
-          <homeCurrency v-bind:rates="currency.rates" v-bind:date="currency.date"></homeCurrency>
+          <homeBill v-bind:currency="currency"></homeBill>
+          <homeCurrency v-bind:currency="currency"></homeCurrency>
         </div>
       </div>
     </div>
@@ -31,13 +31,13 @@ export default {
     }
   },
   async mounted () {
-    this.currency = await this.$store.dispatch('fetchCurrency')
+    this.currency = (await this.$store.dispatch('fetchCurrency')).results
     this.loading = false
   },
   methods: {
     async refresh () {
       this.loading = true
-      this.currency = await this.$store.dispatch('fetchCurrency')
+      this.currency = (await this.$store.dispatch('fetchCurrency')).results
       this.loading = false
     }
   }

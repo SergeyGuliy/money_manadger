@@ -10,15 +10,13 @@
                     <tr>
                         <th>Валюта</th>
                         <th>Курс</th>
-                        <th>Дата</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <tr v-for="cur in currencies" v-bind:key="cur">
                         <td>{{cur}}</td>
-                        <td>{{(1 / rates[cur] * rates['UAH']).toFixed(2)}}</td>
-                        <td>{{date | date('date')}}</td>
+                        <td>{{(currency[cur].val).toFixed(2) | currency('UAH')}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -30,10 +28,10 @@
 <script>
 export default {
   name: 'homeCurrency',
-  props: ['rates', 'date'],
+  props: ['currency'],
   data () {
     return {
-      currencies: ['USD', 'EUR']
+      currencies: ['EUR_UAH', 'USD_UAH']
     }
   }
 }

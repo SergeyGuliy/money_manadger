@@ -69,7 +69,7 @@ export default {
           return this.records.reduce((total, r) => {
             if (r.Id === c.id && r.type === 'outcome') {
               total += r.amount
-					  }
+			}
             return total
 				  }, 0)
 			  }),
